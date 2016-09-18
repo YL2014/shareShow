@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>weex 入门</title>
+
+        <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+        <meta name="author" content="Hakim El Hattab">
+
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+        <!-- Theme used for syntax highlighting of code -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+        
+        <style>
+            ul{width: 100%;}
+        </style>
+
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section >
+                    <h1>weex 入门(坑)</h1>
+                    <p>
+                        <small>袁龙</small>
+                    </p>
+                </section>
+
+                <section>
+                    <section>
+                        <h2><a href="http://alibaba.github.io/weex/index.html" target="_blank">weex 简介</a></h2>
+                        <p>
+                            A framework for building Mobile cross-platform UI
+                        </p>
+                        <div>特点：Cross-Platform & Native Speed</div>
+                    </section>
+                </section>
+
+                <!-- Example of nested vertical slides -->
+                <section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## weex 起步
+                            
+                            ```
+                            #安装
+                            $ npm install -g weex-toolkit@0.4.0
+
+                            #是否安装成功
+                            $ weex --version
+                            ```
+                        </script>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## hello word
+                            
+                            ```
+                            #test.we
+                            <template>
+                              <div class="container">
+                                <div class="cell">
+                                    <image class="thumb" src="http://t.cn/RGE3AJt"></image>
+                                    <text class="title">JavaScript</text>
+                                </div>
+                              </div>
+                            </template>
+                            <!-- <script></script> -->
+                            <style>
+                              .cell { margin-top: 10; margin-left: 10; flex-direction: row; }
+                              .thumb { width: 200; height: 200; }
+                              .title { text-align: center; flex: 1; color: grey; font-size: 50; }
+                            </style>
+                            
+                            ```
+
+                            ```
+                            $ weex test.we
+                            ```
+                        </script>
+                    </section>
+                    <section>
+                        <img width="495" height="584" data-src="http://gtms02.alicdn.com/tps/i2/TB1y151LVXXXXXXaXXXoRYgWVXX-495-584.jpg" alt="example">
+                    </section>
+                </section>
+
+                <section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## 模板语法-组件
+                            目前已经支持的组件有：div、image、input、text、a、video、web、scroller、list、cell、slider、wxc-tabbar、wxc-navpage
+                            > 注意：这里没有标签的概念
+                        </script>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## [关于样式-css](http://alibaba.github.io/weex/doc/references/common-style.html#flexbox)
+                            
+                            - 布局：flexbox
+                            - 样式： 略
+                        </script>
+                    </section>
+                    <section>
+                        <h3><a href="http://alibaba.github.io/weex/doc/syntax/style-n-class.html#notes">关于样式需要注意的坑</a></h3>
+                        <div  style="font-size:24px; text-align: left;">
+                            <p>In order to simplify the page design and the complete underlying implementation, the width of our default screen is unified to 750 pixels, different screens should be scaled with corresponding ratio</p>
+                            <p>The CSS standard may support a lot of selectors, but now weex only support single-class selector</p>
+                            <p>The CSS standard can support many types of length units, but now weex only support pixel, and the px unit could be ignored, you can write number directly. More details can be found in commmon styles</p>
+                            <p>The styles of Weex cannot be inherited to children elements, this is different to the CSS standard, such as color and font-size</p>
+                            <p>The CSS standard contains a lot of styles, but weex only sopport few styles which include layouts such as box model, flexbox, positions. And styles include font-size, color, etc</p>
+                        </div>
+                        <p></p>
+                    </section>
+                </section>
+                <section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## 基于vue的数据绑定
+                        </script>
+                    </section>
+                    <section id="fragments">
+                        <pre>
+                            <code class="hljs" data-trim >
+<template>
+    <text>{{msg}}</text>
+    <text value="{{msg}}"></text>
+</template>
+<script>
+module.exports = {
+    data: {
+        msg: "test"
+    },
+    computed: {}
+    methods: {
+        method1: function(){}
+    },
+    ready: function(){}
+}
+</script>
+                            </code>
+                        </pre>
+                        <p style="text-align:center; font-size: 18px;" class="fragment">注意：weex里的多层异步数据渲染，需要显示指定数据才能正确渲染 <a href="https://github.com/alibaba/weex/issues/1224" target="_blank">issue</a></p>
+                    </section>
+                    <section>
+                        <pre>
+                            <code class="hljs" data-trim contenteditable>
+<template>
+    <list>
+        <cell repeat="{{info.list}}">
+            <text value="{{name}}"></text>
+            <text value="{{value}}">
+        </cell>
+    </list>
+</template>
+<script>
+module.exports = {
+    data: {
+        info: {}
+    },
+    ready: function(){
+        this.initData();
+    },
+    methods: {
+        initData: function(){
+            this.info = {
+                author: {name:"test"},
+                value: 'test',
+                list: [{name:'111', value:'111'}]
+            }
+        }
+    }
+}
+</script>
+                            </code>                         
+                        </pre>
+                            
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h2>weex 实例demo</h2>
+                        <p>
+                            <a href="https://github.com/YL2014/weex-cnode/tree/master" target="_blank">demo地址</a>
+                        </p>
+                        <p>
+                            <a href="https://yl2014.github.io/weex-cnode/" target="_blank">演示地址</a>
+                        </p>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## 常用功能
+                            - 组件间通信
+                            ```
+                            # 父 -> 子
+                            1.自定义属性传值
+                            <header title="{{title}}"></header>
+                            2.this.$broadcast('moveHeader', {});
+                            # 子 -> 父
+                            this.$dispatch('loadList', {tab: tab});
+                            # 兄弟间
+                            ```
+                        </script>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            - 页面跳转与传值
+                            ```
+                            <!-- var base = utils.getBaseUrl(_this); -->
+                            var base = './index.html?page=./dist/';
+                            var params = {
+                                'url': base + 'detail.js',
+                                'animated': 'true'
+                            }
+                            storage.setItem('pageName', 'detail', function(e){
+                                    console.log(e)
+                            });
+                            this.$call('navigator', 'push', params, function(){});
+                            ```
+                            <img width="200px;" style="margin-left:30%;" src="img/1.png" alt="">
+                        </script>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            - 下拉刷新，上拉加载
+                            ```
+                            <list id="scrollList" class="list" loadmoreoffset="2000" onloadmore="{{loadmore}}">
+                                <cell class="cell" repeat="{{list}}" ids="{{id}}" id="{{ $index==0 ? 'first' : ''}}" onclick="{{todetail($index)}}">
+                                    <div class="title-cont">
+                                        <text class="tab-text" style="background:{{backgroundColor}};">{{tab}}</text>
+                                        <text class="title">{{title}}</text>
+                                    </div>
+                                    <div class="avatar-cont">
+                                        <image class="avatar" src={{author.avatar_url}}></image>
+                                        <div class="detail">
+                                            <div class="author-cont">
+                                                <text class="loginname">{{author.loginname}}</text>
+                                                <text class="count">{{reply_count}}/{{visit_count}}</text>
+                                            </div>
+                                            <div class="time-cont">
+                                                <text class="create">{{create_at}}</text>
+                                                <text class="last-reply">{{last_reply_at}}</text>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </cell>
+                                <refresh class="refresh-view" onrefresh="{{onrefresh}}" display="{{refresh_display}}">
+                                    <text class="loadtxt" if="{{refresh_display=='hide'}}">刷新一下</text>
+                                    <loading-indicator class="loadic"></loading-indicator>
+                                </refresh>
+                                <loading  class="loading-view" display="{{loading_display}}" onloading="onloading">
+                                    <text class="loadtxt" if="{{(loading_display==='hide')}}">无更多数据</text>
+                                    <loading-indicator class="loadic"></loading-indicator>
+                                </loading>
+                            </list>
+                            ```
+
+                            
+                        </script>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ```
+                            methods: {
+                                //使用该方法自动加载下一页数据
+                                loadmore: function(){
+                                    var _this = this;
+                                    this.loadData({
+                                        page: ++this.page,
+                                        tab: this.tab,
+                                        cb: function(){
+                                            // _this.loading_display = 'hide';
+                                        }
+                                    });
+                                },
+                                //暂时不适用来加载数据
+                                onloading: function(){
+                                    var _this = this;
+                                    _this.loading_display = 'show';
+                                    // _this.loadmore();
+                                    setTimeout(function(){
+                                        _this.loading_display = 'hide';
+                                    }, 1000);
+                                },
+                                onrefresh: function(){
+                                    var _this = this;
+                                    _this.refresh_display = 'show';
+                                    _this.page = 1;
+                                    _this.loadData({
+                                        tab: _this.tab,
+                                        page: 1,
+                                        cb: function(){
+                                            _this.refresh_display = 'hide';
+                                        }
+                                    });
+
+                                },
+                            }
+                            ```
+
+                        </script>
+
+                    </section>
+                </section>
+                    <section>
+                    <section>
+                        <h2>部署</h2>
+                        <pre>
+                            <code class="hljs" data-trim>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Weex HTML5</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-touch-fullscreen" content="yes" />
+  <meta name="format-detection" content="telephone=no, email=no" />
+  <style>
+    /* html, body, #weex {
+      width: 100%;
+      height: 100%;
+    } */
+    #weex {height: 100%;}
+  </style>
+  <script src="./node_modules/weex-html5/dist/weex.js"></script>
+</head>
+<body>
+  <div id="weex"></div>
+  <script>
+  (function () {
+    function getUrlParam (key) {
+      var reg = new RegExp('[?|&]' + key + '=([^&]+)')
+      var match = location.search.match(reg)
+      return match && match[1]
+    }
+
+    var loader = getUrlParam('loader') || 'xhr'
+    var page = getUrlParam('page') || 'dist/main.js'
+
+    window.weex.init({
+      appId: location.href,
+      loader: loader,
+      source: page,
+      rootId: 'weex'
+    })
+  })();
+  </script>
+</body>
+</html>
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <div style="text-align:center;">
+                            <img src="img/2.png" width="300px" alt="">
+                        </div>
+                    </section>
+
+                </section>
+                <section data-markdown>
+                    <script type="text/template">
+                        ## 总结
+                        1. 样式注意，主要使用style和class
+                        2. 布局使用flexbox
+                        3. list组件作为页面组件的根组件不需要定义height，如若嵌套到其他组件则需显示设置height
+                        4. weex基于组件系统，无element的概念，故不支持innerHTML
+                        5. 其他：android和ios整合
+                    </script>
+                    
+                </section>
+                <section>
+                    <h2>END</h2>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // More info https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+                // More info https://github.com/hakimel/reveal.js#dependencies
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true },
+                    { src: 'plugin/notes/notes.js', async: true }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
